@@ -1,0 +1,28 @@
+---
+#  :backends:
+#    - yaml
+
+#  :yaml:
+#    :datadir: "/etc/puppetlabs/code/environments/%{::environment}/hieradata/"
+
+#  # Hiera lookiup
+#  #
+#  # Some lookup values are set inside previous hiera files:
+#  #
+#  # role - Role should be set in clientcert
+
+#  :hierarchy:
+#    - "clientcert/%{trusted.certname}"
+#    - "domain/%{facts.domain}"
+#    - "application/%{facts.application}/%{facts.apptier}"
+#    - "application/%{facts.application}"
+#    - "role/%{facts.role}"
+
+#    - "defaults"
+#    - "global"
+:hierarchy:
+  - common
+:backends:
+  - yaml
+:yaml:
+  :datadir: 'hieradata/'

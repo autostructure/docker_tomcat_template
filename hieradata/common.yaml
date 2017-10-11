@@ -1,0 +1,51 @@
+---
+docker_tomcat_module::environment_vars:
+  - TABLER_USERNAME
+  - TABLER_PASSWORD
+  - TABLER_URL
+
+# Use static catalina home for docker build
+docker_tomcat_module::catalina_home: &catalina_home /usr/local/tomcat
+
+docker_tomcat_module::properties_properties: {}
+
+# Setup server configurations
+docker_tomcat_module::servers: {}
+docker_tomcat_module::server_connectors: {}
+docker_tomcat_module::server_contexts: {}
+docker_tomcat_module::server_engines: {}
+docker_tomcat_module::server_globalnamingresources: {}
+docker_tomcat_module::server_hosts: {}
+docker_tomcat_module::server_listeners: {}
+docker_tomcat_module::server_realms: {}
+docker_tomcat_module::server_services: {}
+docker_tomcat_module::server_tomcat_users: {}
+docker_tomcat_module::server_valves: {}
+
+# Setup context configurations
+docker_tomcat_module::contexts: {}
+docker_tomcat_module::context_environments: {}
+docker_tomcat_module::context_managers: {}
+docker_tomcat_module::context_resources:
+  jdbc/tm_datasource:
+    catalina_base:          *catalina_home
+    resource_type:          javax.sql.DataSource
+    additional_attributes:
+      driverClassName:        oracle.jdbc.driver.OracleDriver
+      url:                    ${TABLER_URL}
+      type:                   javax.sql.DataSource
+      removeAbandoned:        true
+      removeAbandonedTimeout: 120
+      maxActive:              10
+      maxIdle:                1
+      maxWait:                10000
+      username:               ${TABLER_USERNAME}
+      password:               ${TABLER_PASSWORD}
+
+docker_tomcat_module::context_resourcelinks: {}
+docker_tomcat_module::context_valves: {}
+
+docker_tomcat_module::wars:
+  sample.war:
+    catalina_base: *catalina_home
+    war_source: https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war
