@@ -24,6 +24,14 @@ node {
     server.publishBuildInfo buildInfo
   }
 
+  docker.image('ruby:2.3.3').inside('-u root') {
+    stage('Install Puppet') {
+      sh 'gem install puppet --no-ri --no-rdoc'
+      sh '/usr/local/bundle/bin/puppet module install autostructure-image_build'
+      sh '/usr/local/bundle/bin/puppet docker dockerfile > Dockerfile'
+    }
+  }
+
   stage('Prune Docker') {
     sh 'docker system prune -f'
   }
