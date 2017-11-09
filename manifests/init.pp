@@ -1,1 +1,1 @@
-include ::docker_tomcat_module
+include ::docker_laravel_module
